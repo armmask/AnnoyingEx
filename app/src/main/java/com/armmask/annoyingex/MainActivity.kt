@@ -1,6 +1,5 @@
 package com.armmask.annoyingex
 
-import android.app.DownloadManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,44 +8,35 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.google.gson.Gson
+import com.armmask.annoyingex.R
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    
-    companion object {
-        val LINK = "https://raw.githubusercontent.com/echeeUW/codesnippets/master/ex_messages.json"
-        val TAG = "armmask"
-    }
-    
-    private lateinit var list: List<String>;
+
+    lateinit var annoyingExManager: AnnoyingExManager
+    lateinit var fetchAPI: FetchAPI
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        fetchWithVolley()
+        val display = intent.getStringExtra("message")
 
-        
+        display?.let {
+            annoyingText.text = it
+        }
 
-    }
+        annoyingExManager = (application as AnnoyingExApp).annoyingExManager
+        fetchAPI = (application as AnnoyingExApp).fetchAPI
 
-    private fun fetchWithVolley() {
-        val queue = Volley.newRequestQueue(this)
-        var tempList = mutableListOf<String>()
-        val request = JsonObjectRequest(Request.Method.GET, LINK, null,
-            Response.Listener { response ->
-                val jsonArray = response.getJSONArray("messages")
-                repeat(jsonArray.length()) { index ->
-                    val str = jsonArray.getString(index);
-                    str?.let {
-                        tempList.add(it);
-                    }
-                }
-                Log.i(TAG, tempList.toString())
-                list = tempList
-            },
-            Response.ErrorListener {error ->
-                Toast.makeText(this, error.toString(), Toast.LENGTH_LONG)
-            })
-        queue.add(request)
+        startAnnoy.setOnClickListener() {
+            annoyingExManager.startAnnoyingEx()
+        }
+
+        endAnnoy.setOnClickListener {
+            annoyingExManager.stopAnnoyingEx()
+        }
+
     }
 }
