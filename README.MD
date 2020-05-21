@@ -6,8 +6,8 @@ Added Notifications and API Fetch to 2 background Workers
 All of em
 
 ## Screenshots
-<img src="./Capture2.jpg" alt="Screenshot" height="500" />
+<img src="./Capture2.JPG" alt="Screenshot" height="500" />
 
-<img src="./Capture.jpg" alt="Screenshot" height="500" />
+<img src="./Capture.JPG" alt="Screenshot" height="500" />
 
-<img src="./Capture1.jpg" alt="Screenshot" height="500" />
+<img src="./Capture1.JPG" alt="Screenshot" height="500" />
